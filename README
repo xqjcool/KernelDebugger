@@ -1,0 +1,33 @@
+This is the README file for funchook, which implements the function hook
+to provide a easy and convenient way to analyze kernel problems and provide
+hotfix to kernel.
+
+Introduction.
+*************
+
+- Analyze kernel problems
+we can add code to the hook function to analyze the change before and after
+the execution of a specific function. like kernel printk, stack dump, etc.
+
+- hotfix patch for kernel problem
+we can fix the problem in hook function, once hook function is registered,
+it will work instead of the original function.
+
+
+
+Installation.
+*************
+
+Run `make` to generate module ko file, then install ko file on kernel system.
+
+
+Contacts.
+*********
+
+Xing Qingjie <xqjcool@gmail.com>
+
+
+Copyrights:
+***********
+
+All of the code can be freely used and redistributed.
