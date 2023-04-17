@@ -27,7 +27,7 @@
 static _retype_ (*orig_##_name_)(__VA_ARGS__); \
 static _retype_ stub_##_name_(__VA_ARGS__) \
 { \
-	return; \
+	return (_retype_)0; \
 } \
 static _retype_ hook_##_name_(__VA_ARGS__) \
 
