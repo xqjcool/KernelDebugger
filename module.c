@@ -1,5 +1,6 @@
 #include <linux/module.h>
 #include "funchook.h"
+#include "procfs.h"
 
 /* heades needed by patched function */
 #include <net/sock.h>
@@ -29,6 +30,12 @@ static __init int funchook_init(void)
 {
 	int ret = 0;
 
+	ret = procfs_init();
+	if (ret != 0) {
+		pr_info("procfs_init failed ret=%d\n", ret);
+		return ret;
+	}
+
 	/*
 	 * 2. use HOOK_REGISTER macro to replace original function with hook function
 	 */
@@ -50,6 +57,8 @@ static __exit void funchook_exit(void)
 	 * 3. use HOOK_UNREGISTER macro to restore original function.
 	 */
 	HOOK_UNREGISTER(fput);
+
+	procfs_exit();
 }
 module_exit(funchook_exit);
 

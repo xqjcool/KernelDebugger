@@ -6,6 +6,9 @@ TARGET		?= sample
 EXTRA_CFLAGS    =  -Wall -o2
 SRC_FILES       =   funchook.c module.c
 
+ifdef CONFIG_PROC_FS
+	SRC_FILES += procfs.c
+endif
 
 OBJ_FILES       =   $(addsuffix .o, $(basename $(SRC_FILES)))
 
