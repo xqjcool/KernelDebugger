@@ -3,6 +3,8 @@
 #include <linux/seq_file.h>
 #include <linux/uaccess.h>
 
+#include "kcompat.h"
+
 /* struct */
 typedef struct _addrdata {
         uint64_t *addr;
@@ -99,7 +101,7 @@ static int addrdata_open(struct inode *inode, struct file *file)
 	
 	if (!ret) {
 		struct seq_file *sf = file->private_data;
-		sf->private = PDE_DATA(inode);
+		sf->private = pde_data(inode);
 	}
 
 	return ret;
@@ -109,7 +111,7 @@ static ssize_t addrdata_write(struct file *file, const char __user *input, size_
 {
 	char buffer[PROC_WRITELEN + 1] = {0};
 	char *p = buffer; 
-	addrdata_t *addrdatap = PDE_DATA(file_inode(file));
+	addrdata_t *addrdatap = pde_data(file_inode(file));
 	int rc;
 
 	if (size > PROC_WRITELEN)
@@ -134,12 +136,12 @@ static ssize_t addrdata_write(struct file *file, const char __user *input, size_
 	return size;
 }
 
-static struct file_operations addrdata_proc_fops = {
-	.open	= addrdata_open,
-	.read	= seq_read,
-	.llseek	= seq_lseek,
-	.write	= addrdata_write,
-	.release= seq_release,
+static struct proc_ops addrdata_proc_fops = {
+	.proc_open	= addrdata_open,
+	.proc_read	= seq_read,
+	.proc_lseek	= seq_lseek,
+	.proc_write	= addrdata_write,
+	.proc_release	= seq_release,
 };
 
 int procfs_init(void)
