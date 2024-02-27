@@ -1,12 +1,13 @@
 #include <linux/module.h>
 #include "funchook.h"
 #include "procfs.h"
+#include "kcompat.h"
 
 /* heades needed by patched function */
 #include <net/sock.h>
 
 /* module param defines */
-
+KALLSYMS_MACRO();
 
 /*
  * 1.use HOOK_DEFINE macro to define the hook function.
