@@ -7,6 +7,11 @@
 #include <net/sock.h>
 
 /* module param defines */
+
+/*
+ * Need the mod_param lookup_func_addr for Linux-5.7 and later version
+ * For example: "insmod sample.ko lookup_func_addr=0xffffffff803782c0"
+ */
 KALLSYMS_MACRO();
 
 /*
