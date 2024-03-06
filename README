@@ -14,6 +14,13 @@ we can fix the problem in hook function, once hook function is registered,
 it will work instead of the original function.
 
 
+Usage.
+*************
+
+1. Copy the hook_fput directory and rename it, for example, hook_new.
+2. Modify samples/Makefile, add "obj-y += hook_new".
+3. 3. Modify hook_new/module.c according to your needs.
+
 
 Installation.
 *************

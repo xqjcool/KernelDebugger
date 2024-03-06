@@ -1,5 +1,5 @@
 #include <linux/module.h>
-#include "funchook.h"
+#include <funchook.h>
 #include "procfs.h"
 #include "kcompat.h"
 
