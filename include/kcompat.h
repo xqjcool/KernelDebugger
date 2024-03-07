@@ -55,9 +55,12 @@ static inline void text_poke_loc_init(struct text_poke_loc *tp, void *addr,
 
 #ifdef CONFIG_PROC_FS
 
+#ifdef PDE_DATA
+#define pde_data	PDE_DATA
+#endif
+
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(5,17,0))
 
-#define pde_data	PDE_DATA
 #define proc_ops	file_operations
 #define proc_open	open
 #define proc_read	read
