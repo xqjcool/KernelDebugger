@@ -31,7 +31,7 @@ int hook_register(const char *func_name, void **pptr_func, void **pptr_orig,
 
 	if (!ptr_kallsyms_lookup_name)
 	{
-		ptr_kallsyms_lookup_name = (kallsyms_lookup_name_t)kallsyms_lookup_name;
+		ptr_kallsyms_lookup_name = (kallsyms_lookup_name_t)kallsyms_lookup_name_func;
 	}
 
 	if (!ptr_text_poke_bp_batch)

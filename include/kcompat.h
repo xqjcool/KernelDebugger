@@ -15,7 +15,7 @@ typedef unsigned long (*kallsyms_lookup_name_t)(const char *name);
        module_param(lookup_func_addr, ulong, 0444); \
        MODULE_PARM_DESC(lookup_func_addr, "The function address of kallsyms_lookup_name");
 extern unsigned long lookup_func_addr;
-#define kallsyms_lookup_name lookup_func_addr
+#define kallsyms_lookup_name_func lookup_func_addr
 
 #define POKE_MAX_OPCODE_SIZE 5
 struct text_poke_loc {
@@ -43,6 +43,7 @@ static inline void text_poke_loc_init(struct text_poke_loc *tp, void *addr,
 #else
 #include <asm/text-patching.h>
 #define KALLSYMS_MACRO() 
+#define kallsyms_lookup_name_func kallsyms_lookup_name
 static inline void text_poke_loc_init(struct text_poke_loc *tp, void *addr,
 		const void *opcode, size_t len, const void *emulate)
 {
