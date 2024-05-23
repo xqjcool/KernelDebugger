@@ -10,7 +10,10 @@
 
 /*
  * Need the mod_param lookup_func_addr for Linux-5.7 and later version
- * For example: "insmod sample.ko lookup_func_addr=0xffffffff803782c0" */ KALLSYMS_MACRO(); 
+ * For example: "insmod sample.ko lookup_func_addr=0xffffffff803782c0"
+ */
+KALLSYMS_MODPARAM_DEF(); 
+
 /*
  * 1.use HOOK_DEFINE macro to define the hook function.
  *  1.1 if you need to call the original function in the hook function,
@@ -33,6 +36,12 @@ static __init int funchook_init(void)
 {
 	int ret = 0;
 
+	ret = kallsyms_modparam_check();
+	if (ret != 0) {
+		pr_info("%s\n", KALLSYMS_MODPARAM_USAGE);
+		return ret;
+	}
+
 	ret = procfs_init();
 	if (ret != 0) {
 		pr_info("procfs_init failed ret=%d\n", ret);
@@ -46,7 +55,7 @@ static __init int funchook_init(void)
 	if (ret != 0)
 	{
 		pr_info("fput failed ret=%d\n", ret);
-		return ret;
+		goto CommonReturn;
 	}
 CommonReturn:
 	if (ret) {
