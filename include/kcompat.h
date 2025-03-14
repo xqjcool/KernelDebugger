@@ -37,7 +37,7 @@ struct text_poke_loc {
 };
 
 static inline void text_poke_loc_init(struct text_poke_loc *tp, void *addr,
-		const void *opcode, size_t len, const void *emulate)
+		const void *opcode, size_t len, void *emulate)
 {
 	kallsyms_lookup_name_t ptr_lookup_func_addr = (kallsyms_lookup_name_t)lookup_func_addr;
         memcpy((void *)tp->text, opcode, len);
@@ -49,12 +49,12 @@ static inline void text_poke_loc_init(struct text_poke_loc *tp, void *addr,
 }
 #else
 #include <asm/text-patching.h>
-#define KALLSYMS_MODPARAM_USAGE 
+#define KALLSYMS_MODPARAM_USAGE ""
 #define KALLSYMS_MODPARAM_DEF() 
-#define kallsyms_modparam_check() 
+#define kallsyms_modparam_check() 0
 #define kallsyms_lookup_name_func kallsyms_lookup_name
 static inline void text_poke_loc_init(struct text_poke_loc *tp, void *addr,
-		const void *opcode, size_t len, const void *emulate)
+		const void *opcode, size_t len, void *emulate)
 {
         tp->addr = addr;
         tp->len = len;
@@ -65,9 +65,7 @@ static inline void text_poke_loc_init(struct text_poke_loc *tp, void *addr,
 
 #ifdef CONFIG_PROC_FS
 
-#ifdef PDE_DATA
 #define pde_data	PDE_DATA
-#endif
 
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(5,17,0))
 
