@@ -1,2 +1,1 @@
-obj-y += hook_fput/
-
+obj-m += hook_fput/

@@ -9,6 +9,26 @@
 #ifndef _FUNCHOOK_H_
 #define _FUNCHOOK_H_
 
+#include <linux/kallsyms.h>
+#include <linux/moduleparam.h>
+#include <linux/printk.h>
+
+typedef unsigned long (*kallsyms_lookup_name_t)(const char *name);
+
+#define KALLSYMS_MODPARAM_USAGE "Usage: insmod hook_fput.ko lookup_func_addr=0xffffffff80408080" 
+#define KALLSYMS_MODPARAM_DEF() \
+	unsigned long lookup_func_addr = 0; \
+	module_param(lookup_func_addr, ulong, 0444); \
+	MODULE_PARM_DESC(lookup_func_addr, "The function address of kallsyms_lookup_name");
+
+extern unsigned long lookup_func_addr;
+#define kallsyms_lookup_name_func lookup_func_addr
+
+static inline int kallsyms_modparam_check(void)
+{
+	return (lookup_func_addr == 0) ? -1 : 0;
+}
+
 /*
  * call the original function in hook function
  * @_name_: name of the original function
